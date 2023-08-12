@@ -122,7 +122,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Portal(
       child: MaterialApp.router(
-        title: 'Puntaje BD',
+        title: 'Download FMT APK',
         debugShowCheckedModeBanner: false,
         locale: _locale,
         localizationsDelegates: const [

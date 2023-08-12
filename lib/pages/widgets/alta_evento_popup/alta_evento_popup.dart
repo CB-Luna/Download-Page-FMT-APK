@@ -9,8 +9,6 @@ import 'package:provider/provider.dart';
 import '../animated_hover_button.dart';
 import '../header_alta_evento.dart';
 
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-
 class AltaEventoPopup extends StatefulWidget {
   const AltaEventoPopup(
       {Key? key,
@@ -307,17 +305,7 @@ class _AltaEventoPopupState extends State<AltaEventoPopup> {
                                       fontWeight: FontWeight.normal,
                                     ),
                                 onTap: () {
-                                  DatePicker.showDateTimePicker(
-                                    context,
-                                    showTitleActions: true,
-                                    onConfirm: (date) {
-                                      provider.fechaController.text =
-                                          DateFormat('yyyy-MM-dd HH:mm:ss')
-                                              .format(date);
-                                    },
-                                    currentTime: DateTime.now(),
-                                    locale: LocaleType.es,
-                                  );
+                               
                                 },
                               ),
                             ],

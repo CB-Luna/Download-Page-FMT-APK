@@ -59,29 +59,29 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(100, 50, 0, 0),
-                        // child: Image.network(
-                        //   assets.logoBlanco,
-                        //   height: 50,
-                        //   fit: BoxFit.cover,
-                        // ),
-                        child: AppTheme.themeMode == ThemeMode.dark
-                            ? Image.network(
-                                assets.logoBlanco,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.network(
-                                assets.logoColor,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: Padding(
+                    //     padding:
+                    //         const EdgeInsetsDirectional.fromSTEB(100, 50, 0, 0),
+                    //     // child: Image.network(
+                    //     //   assets.logoBlanco,
+                    //     //   height: 50,
+                    //     //   fit: BoxFit.cover,
+                    //     // ),
+                    //     child: AppTheme.themeMode == ThemeMode.dark
+                    //         ? Image.network(
+                    //             assets.logoBlanco,
+                    //             height: 60,
+                    //             fit: BoxFit.cover,
+                    //           )
+                    //         : Image.network(
+                    //             assets.logoColor,
+                    //             height: 60,
+                    //             fit: BoxFit.cover,
+                    //           ),
+                    //   ),
+                    // ),
                     Expanded(
                       child: Center(
                         child: SizedBox(
@@ -97,249 +97,34 @@ class _LoginPageState extends State<LoginPage> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, 50),
                                     child: Text(
-                                      'Inicio de sesión',
+                                      'Download the APK below',
                                       style: AppTheme.of(context)
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Bicyclette-Light',
                                             color: AppTheme.of(context)
-                                                .primaryColor,
+                                                .secondaryColor,
                                             fontSize: 60,
                                             fontWeight: FontWeight.w600,
                                             useGoogleFonts: false,
                                           ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    child: TextFormField(
-                                      controller: userState.emailController,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'El correo es requerido';
-                                        } else if (!EmailValidator.validate(
-                                            value)) {
-                                          return 'Por favor ingresa un correo válido';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        labelText: 'Usuario',
-                                        hintText: 'Usuario',
-                                        labelStyle: AppTheme.of(context)
-                                            .bodyText2
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: AppTheme.of(context)
-                                                  .primaryColor,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                        hintStyle: AppTheme.of(context)
-                                            .bodyText2
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: AppTheme.of(context)
-                                                  .secondaryColor,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                        enabledBorder:
-                                            const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.grey,
-                                            width: 1,
-                                          ),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                        focusedBorder:
-                                            const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.grey,
-                                            width: 1,
-                                          ),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                      ),
-                                      style: AppTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            color: AppTheme.of(context)
-                                                .secondaryColor,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
-                                  ),
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 60, 0, 0),
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.3,
-                                      child: TextFormField(
-                                        controller:
-                                            userState.passwordController,
-                                        obscureText: !passwordVisibility,
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'La contraseña es requerida';
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          labelText: 'Contraseña',
-                                          hintText: 'Contraseña',
-                                          hintStyle: AppTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .secondaryColor,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          labelStyle: AppTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryColor,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Colors.grey,
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(4.0),
-                                              topRight: Radius.circular(4.0),
-                                            ),
+                                            0, 0, 0, 50),
+                                    child: AppTheme.themeMode == ThemeMode.dark
+                                        ? Image.asset(
+                                            'assets/images/icon.png',
+                                            height: 200,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.asset(
+                                            'assets/images/icon.png',
+                                            height: 200,
+                                            fit: BoxFit.cover,
                                           ),
-                                          focusedBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Colors.grey,
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(4.0),
-                                              topRight: Radius.circular(4.0),
-                                            ),
-                                          ),
-                                          suffixIcon: InkWell(
-                                            onTap: () => setState(
-                                              () => passwordVisibility =
-                                                  !passwordVisibility,
-                                            ),
-                                            focusNode:
-                                                FocusNode(skipTraversal: true),
-                                            child: Icon(
-                                              passwordVisibility
-                                                  ? Icons.visibility_outlined
-                                                  : Icons
-                                                      .visibility_off_outlined,
-                                              color: AppTheme.of(context)
-                                                  .primaryColor,
-                                              size: 22,
-                                            ),
-                                          ),
-                                        ),
-                                        style: AppTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: AppTheme.of(context)
-                                                  .secondaryColor,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 40, 0, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 0, 5, 0),
-                                          child: ToggleIcon(
-                                            onPressed: () async {
-                                              userState.updateRecuerdame();
-                                            },
-                                            value: userState.recuerdame,
-                                            onIcon: Icon(
-                                              Icons.check_circle_outline_sharp,
-                                              color: AppTheme.of(context)
-                                                  .primaryColor,
-                                              size: 36,
-                                            ),
-                                            offIcon: FaIcon(
-                                              FontAwesomeIcons.circle,
-                                              color: AppTheme.of(context)
-                                                  .primaryColor,
-                                              size: 30,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 5, 0, 0),
-                                          child: Text(
-                                            'Recordarme',
-                                            style: AppTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: AppTheme.of(context)
-                                                      .primaryColor,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 40, 5, 0),
-                                    child: InkWell(
-                                      onTap: () => showDialog(
-                                        context: context,
-                                        builder: (_) =>
-                                            const ResetPasswordPopup(),
-                                      ),
-                                      child: Text(
-                                        '¿Olvidaste tu contraseña?',
-                                        style: AppTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color: AppTheme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                            ),
-                                      ),
-                                    ),
                                   ),
                                   Padding(
                                     padding:
@@ -417,12 +202,12 @@ class _LoginPageState extends State<LoginPage> {
                                           log('Error al iniciar sesion - $e');
                                         }
                                       },
-                                      text: 'Ingresar',
+                                      text: 'Download',
                                       options: ButtonOptions(
                                         width: 200,
                                         height: 50,
                                         color:
-                                            AppTheme.of(context).primaryColor,
+                                            AppTheme.of(context).secondaryColor,
                                         textStyle: AppTheme.of(context)
                                             .subtitle2
                                             .override(
@@ -458,7 +243,7 @@ class _LoginPageState extends State<LoginPage> {
                                               child: FaIcon(
                                                 FontAwesomeIcons.shieldHalved,
                                                 color: AppTheme.of(context)
-                                                    .primaryColor,
+                                                    .secondaryColor,
                                                 size: 40,
                                               ),
                                             ),
@@ -467,14 +252,14 @@ class _LoginPageState extends State<LoginPage> {
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(0, 0, 10, 0),
                                               child: Text(
-                                                'Acceso\nseguro',
+                                                'Data\nprotected',
                                                 style: AppTheme.of(context)
                                                     .bodyText1
                                                     .override(
                                                       fontFamily: 'Poppins',
                                                       color:
                                                           AppTheme.of(context)
-                                                              .primaryColor,
+                                                              .secondaryColor,
                                                       fontSize: 15,
                                                     ),
                                               ),
@@ -492,13 +277,13 @@ class _LoginPageState extends State<LoginPage> {
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(10, 0, 0, 2),
                                           child: Text(
-                                            'La seguridad es nuestra prioridad, por\neso usamos los estándares mas altos.',
+                                            "Security is our priority, that's why\nwe adhere to the highest standards.",
                                             style: AppTheme.of(context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Poppins',
                                                   color: AppTheme.of(context)
-                                                      .primaryColor,
+                                                      .secondaryColor,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.normal,
                                                 ),
