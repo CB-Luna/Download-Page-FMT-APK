@@ -1,18 +1,16 @@
 import 'dart:developer';
+import 'dart:html';
 
+import 'package:dowload_page_apk/pages/widgets/toasts/failed_toast.dart';
+import 'package:dowload_page_apk/pages/widgets/toasts/success_toast.dart';
+import 'package:dowload_page_apk/pages/widgets/toasts/warning_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:email_validator/email_validator.dart';
-
-import 'package:dowload_page_apk/helpers/supabase/queries.dart';
-import 'package:dowload_page_apk/models/modelos_pantallas/configuration.dart';
-import 'package:dowload_page_apk/pages/login_page/reset_password_popup.dart';
 import 'package:dowload_page_apk/services/api_error_handler.dart';
-import 'package:dowload_page_apk/helpers/globals.dart';
 import 'package:dowload_page_apk/pages/widgets/custom_button.dart';
-import 'package:dowload_page_apk/pages/widgets/toggle_icon.dart';
 import 'package:dowload_page_apk/providers/providers.dart';
 import 'package:dowload_page_apk/theme/theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sf;
@@ -26,6 +24,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  FToast fToast = FToast();
   bool passwordVisibility = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    fToast.init(context);
     final UserState userState = Provider.of<UserState>(context);
     return Scaffold(
       key: scaffoldKey,
@@ -54,253 +54,271 @@ class _LoginPageState extends State<LoginPage> {
                       'assets/rive_animations/squares.riv',
                       fit: BoxFit.cover,
                     ),
-              Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // Align(
-                    //   alignment: Alignment.centerLeft,
-                    //   child: Padding(
-                    //     padding:
-                    //         const EdgeInsetsDirectional.fromSTEB(100, 50, 0, 0),
-                    //     // child: Image.network(
-                    //     //   assets.logoBlanco,
-                    //     //   height: 50,
-                    //     //   fit: BoxFit.cover,
-                    //     // ),
-                    //     child: AppTheme.themeMode == ThemeMode.dark
-                    //         ? Image.network(
-                    //             assets.logoBlanco,
-                    //             height: 60,
-                    //             fit: BoxFit.cover,
-                    //           )
-                    //         : Image.network(
-                    //             assets.logoColor,
-                    //             height: 60,
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //   ),
-                    // ),
-                    Expanded(
-                      child: Center(
-                        child: SizedBox(
-                          width: 800,
-                          height: 800,
-                          child: CustomPaint(
-                            child: Stack(children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 50),
-                                    child: Text(
-                                      'Download the APK below',
-                                      style: AppTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Bicyclette-Light',
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Padding(
+                  //     padding:
+                  //         const EdgeInsetsDirectional.fromSTEB(100, 50, 0, 0),
+                  //     // child: Image.network(
+                  //     //   assets.logoBlanco,
+                  //     //   height: 50,
+                  //     //   fit: BoxFit.cover,
+                  //     // ),
+                  //     child: AppTheme.themeMode == ThemeMode.dark
+                  //         ? Image.network(
+                  //             assets.logoBlanco,
+                  //             height: 60,
+                  //             fit: BoxFit.cover,
+                  //           )
+                  //         : Image.network(
+                  //             assets.logoColor,
+                  //             height: 60,
+                  //             fit: BoxFit.cover,
+                  //           ),
+                  //   ),
+                  // ),
+                  Expanded(
+                    child: Center(
+                      child: SizedBox(
+                        width: 800,
+                        height: 800,
+                        child: CustomPaint(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 50),
+                                child: Text(
+                                  'Download the APK below',
+                                  style: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Bicyclette-Light',
+                                        color: AppTheme.of(context)
+                                            .secondaryColor,
+                                        fontSize: 60,
+                                        fontWeight: FontWeight.w600,
+                                        useGoogleFonts: false,
+                                      ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 50),
+                                child: AppTheme.themeMode == ThemeMode.dark
+                                    ? Image.asset(
+                                        'assets/images/icon.png',
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.asset(
+                                        'assets/images/icon.png',
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0, 40, 0, 0),
+                                child: CustomButton(
+                                  onPressed: () async {
+
+                                    //Download
+                                    try {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: (context),
+                                        builder: (builder) {
+                                          return AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(15),
+                                            ),
+                                            title: const Text('Allow Download FMT.'),
+                                            content: const Text('Are you sure you want to download FMT APK?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () async {
+                                                  final html = window.navigator.userAgent.toLowerCase();
+                                                  if (html.contains("android")) {
+                                                      await FileDownloader.downloadFile(
+                                                      url: 'https://tinypng.com/images/social/website.jpg', // Reemplaza con la URL real del archivo APK
+                                                      name: 'panda.jpg', // Nombre del archivo
+                                                      onDownloadCompleted: (String path) {
+                                                        fToast.showToast(
+                                                          child: const SuccessToast(
+                                                            message: "Succesfull download",
+                                                          ),
+                                                          gravity: ToastGravity.BOTTOM,
+                                                          toastDuration: const Duration(seconds: 3),
+                                                        );
+                                                        print('FILE DOWNLOADED TO PATH: $path');
+                                                      },
+                                                      onDownloadError: (String error) {
+                                                        fToast.showToast(
+                                                          child: const FailedToast(
+                                                            message: "Download failed",
+                                                          ),
+                                                          gravity: ToastGravity.BOTTOM,
+                                                          toastDuration: const Duration(seconds: 3),
+                                                        );
+                                                        print('DOWNLOAD ERROR: $error');
+                                                      });
+                                                  } else {
+                                                    fToast.showToast(
+                                                      child: const WarningToast(
+                                                        message: "This device isn't support the file APK",
+                                                      ),
+                                                      gravity: ToastGravity.BOTTOM,
+                                                      toastDuration: const Duration(seconds: 3),
+                                                    );
+                                                  }
+                                                  // ignore: use_build_context_synchronously
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  'Yes',
+                                                  style: AppTheme.of(context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: AppTheme.of(context)
+                                                        .secondaryColor,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.normal,
+                                                  ),
+                                                )
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(context),
+                                                child: Text(
+                                                  'No',
+                                                  style: AppTheme.of(context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: AppTheme.of(context)
+                                                        .secondaryColor,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.normal,
+                                                  ),
+                                                )
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                    } catch (e) {
+                                      if (e is sf.AuthException) {
+                                        await ApiErrorHandler.callToast(
+                                            'Failed to download the APK');
+                                        return;
+                                      }
+                                      log('Error al descargar el archivo apk - $e');
+                                    }
+                                  },
+                                  text: 'Download',
+                                  options: ButtonOptions(
+                                    width: 200,
+                                    height: 50,
+                                    color:
+                                        AppTheme.of(context).secondaryColor,
+                                    textStyle: AppTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        15, 40, 15, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 10, 0),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.shieldHalved,
                                             color: AppTheme.of(context)
                                                 .secondaryColor,
-                                            fontSize: 60,
-                                            fontWeight: FontWeight.w600,
-                                            useGoogleFonts: false,
-                                          ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 50),
-                                    child: AppTheme.themeMode == ThemeMode.dark
-                                        ? Image.asset(
-                                            'assets/images/icon.png',
-                                            height: 200,
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Image.asset(
-                                            'assets/images/icon.png',
-                                            height: 200,
-                                            fit: BoxFit.cover,
-                                          ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 40, 0, 0),
-                                    child: CustomButton(
-                                      onPressed: () async {
-                                        if (!formKey.currentState!.validate()) {
-                                          return;
-                                        }
-
-                                        //Login
-                                        try {
-                                          await supabase.auth
-                                              .signInWithPassword(
-                                            email:
-                                                userState.emailController.text,
-                                            password: userState
-                                                .passwordController.text,
-                                          );
-
-                                          if (userState.recuerdame == true) {
-                                            await userState.setEmail();
-                                            await userState.setPassword();
-                                          } else {
-                                            userState.emailController.text = '';
-                                            userState.passwordController.text =
-                                                '';
-                                            await prefs.remove('email');
-                                            await prefs.remove('password');
-                                          }
-
-                                          if (supabase.auth.currentUser ==
-                                              null) {
-                                            await ApiErrorHandler.callToast();
-                                            return;
-                                          }
-
-                                          currentUser = await SupabaseQueries
-                                              .getCurrentUserData();
-                                          print(currentUser!.rol);
-                                          Configuration? config =
-                                              await SupabaseQueries
-                                                  .getUserTheme();
-                                          AppTheme.initConfiguration(config);
-                                          if (config != null) {
-                                            assets.logoBlanco =
-                                                config.logos.logoBlanco;
-                                            assets.logoColor =
-                                                config.logos.logoColor;
-                                          }
-
-                                          if (currentUser == null) {
-                                            await ApiErrorHandler.callToast();
-                                            return;
-                                          }
-
-                                          if (!mounted) return;
-                                          if (currentUser!.esEmpleado) {
-                                            context.pushReplacement('/saldo');
-                                          } else if (currentUser!
-                                              .esJefeDeArea) {
-                                            context
-                                                .pushReplacement('/empleados');
-                                          } else if (currentUser!
-                                              .esAdministrador) {
-                                            context.pushReplacement('/home');
-                                          }
-                                        } catch (e) {
-                                          if (e is sf.AuthException) {
-                                            await ApiErrorHandler.callToast(
-                                                'Credenciales inválidas');
-                                            return;
-                                          }
-                                          log('Error al iniciar sesion - $e');
-                                        }
-                                      },
-                                      text: 'Download',
-                                      options: ButtonOptions(
-                                        width: 200,
-                                        height: 50,
-                                        color:
-                                            AppTheme.of(context).secondaryColor,
-                                        textStyle: AppTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            15, 40, 15, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 10, 0),
-                                              child: FaIcon(
-                                                FontAwesomeIcons.shieldHalved,
-                                                color: AppTheme.of(context)
-                                                    .secondaryColor,
-                                                size: 40,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 10, 0),
-                                              child: Text(
-                                                'Data\nprotected',
-                                                style: AppTheme.of(context)
-                                                    .bodyText1
-                                                    .override(
-                                                      fontFamily: 'Poppins',
-                                                      color:
-                                                          AppTheme.of(context)
-                                                              .secondaryColor,
-                                                      fontSize: 15,
-                                                    ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: 2,
-                                          height: 70,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFFE7E7E7),
+                                            size: 40,
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(10, 0, 0, 2),
+                                          padding:
+                                              const EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 10, 0),
                                           child: Text(
-                                            "Security is our priority, that's why\nwe adhere to the highest standards.",
+                                            'Data\nprotected',
                                             style: AppTheme.of(context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Poppins',
-                                                  color: AppTheme.of(context)
-                                                      .secondaryColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
+                                                  color:
+                                                      AppTheme.of(context)
+                                                          .secondaryColor,
+                                                  fontSize: 15,
                                                 ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
+                                    Container(
+                                      width: 2,
+                                      height: 70,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFFE7E7E7),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional
+                                          .fromSTEB(10, 0, 0, 2),
+                                      child: Text(
+                                        "Security is our priority, that's why\nwe adhere to the highest standards.",
+                                        style: AppTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: AppTheme.of(context)
+                                                  .secondaryColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ]),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
