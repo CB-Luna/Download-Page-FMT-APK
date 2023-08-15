@@ -1,12 +1,2 @@
-export 'package:dowload_page_apk/pages/configuracion_page/configuracion_page.dart';
-export 'package:dowload_page_apk/pages/editar_usuario_page/editar_usuario_page.dart';
-export 'package:dowload_page_apk/pages/usuarios_page/usuarios_page.dart';
-export 'package:dowload_page_apk/pages/alta_usuario_page/alta_usuario_page.dart';
 export 'package:dowload_page_apk/pages/page_not_found.dart';
-export 'package:dowload_page_apk/pages/home_page/home_page.dart';
 export 'package:dowload_page_apk/pages/login_page/login_page.dart';
-export 'package:dowload_page_apk/pages/jefes_area_page/jefes_area_page.dart';
-export 'package:dowload_page_apk/pages/empleados_page/empleados_page_desktop.dart';
-export 'package:dowload_page_apk/pages/productos_page/productos_page.dart';
-export 'package:dowload_page_apk/pages/validacion_puntaje_page/validacion_puntaje.dart';
-export 'package:dowload_page_apk/pages/eventos_page/eventos_page.dart';

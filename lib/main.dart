@@ -1,8 +1,4 @@
-import 'package:dowload_page_apk/providers/cotizador_provider.dart';
-import 'package:dowload_page_apk/providers/tablero_provider.dart';
-import 'package:dowload_page_apk/providers/usuario_evento_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:dowload_page_apk/providers/saldo_controller.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -53,9 +49,6 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => HomeProvider(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => VisualStateProvider(context),
         ),
         ChangeNotifierProvider(
@@ -63,33 +56,6 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => UsuariosProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => JefesAreaProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => TableroStateProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => CotizadorProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => SaldoController(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => EmpleadosProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ValidacionPuntajeProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ProductosProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => UsuarioEventoController(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => EventosProvider(),
         ),
       ],
       child: const MyApp(),

@@ -1,9 +1,3 @@
-export 'package:dowload_page_apk/providers/validacion_puntaje_provider.dart';
 export 'package:dowload_page_apk/providers/visual_state_provider.dart';
 export 'package:dowload_page_apk/providers/usuarios_provider.dart';
 export 'package:dowload_page_apk/providers/user_provider.dart';
-export 'package:dowload_page_apk/providers/home_provider.dart';
-export 'package:dowload_page_apk/providers/jefes_area_provider.dart';
-export 'package:dowload_page_apk/providers/empleados_provider.dart';
-export 'package:dowload_page_apk/providers/productos_provider.dart';
-export 'package:dowload_page_apk/providers/eventos_provider.dart';
